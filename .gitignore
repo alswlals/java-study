@@ -3,7 +3,7 @@
 **/build/
 **/out
 
-##eclise
+##eclipse
 **/.settings
 **/.classpath
 **/.project
