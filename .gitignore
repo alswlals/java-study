@@ -1,1 +1,9 @@
-/target/
+## Maven
+**/target/ 
+**/build/
+**/out
+
+##eclise
+**/.settings
+**/.classpath
+**/.project
