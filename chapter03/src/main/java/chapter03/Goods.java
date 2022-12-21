@@ -13,6 +13,15 @@ public class Goods {
 		Goods.countOfGoods = Goods.countOfGoods + 1; //같은 클래스 안에서는 생략 가능
 	}
 	
+	public Goods(String name, int price, int countStock, int countSold) {
+		this.name = name;
+		this.price = price;
+		this.countStock = countStock;
+		this.countSold = countSold;
+		
+		countOfGoods = countOfGoods + 1;
+	}
+	
 	public int calcDiscountPrice(float discountRate) {
 		
 		return (int)(price*discountRate); //연산 먼저 하기 때문에 명시부터 한 담에 괄호로 묶어주기)
