@@ -17,7 +17,8 @@ public class Prob03 {
 	}
 
 	private static void replaceSpace(char[] c) {
-		String replace 
+		String newC = (String.valueOf(c)).replace(" ", ",");
+		System.out.println(newC);
 	}
 
 	private static void printCharArray(char[] c) {

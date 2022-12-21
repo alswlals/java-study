@@ -24,6 +24,7 @@ public class Goods {
 	
 	public String getName() {
 		return name;
+		//return this.name; 써도 됨 this는  헷갈릴 때 사용하는 것,, ,, 바로 아래 경우처럼
 	}
 	public void setName(String name) {
 		this.name = name;

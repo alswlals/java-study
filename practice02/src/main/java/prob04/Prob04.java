@@ -16,6 +16,8 @@ public class Prob04 {
 		//char[] result = new char[len];
 		
 		//뒤집기?
+		
+		
 		char[] result = str.toCharArray();
 		
 		str.charAt(0);
