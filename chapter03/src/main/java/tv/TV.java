@@ -5,27 +5,51 @@ public class TV {
 	private int volume;		//0~100
 	private boolean power;
 	
-	private void power(boolean on) {
+	public TV(int channel, int volume, boolean power) {
+		this.channel = channel;
+		this.volume = volume;
+		this.power = power;
+	}
+
+	public void power(boolean on) {
 		this.power = on;
 	}
 	
-	private void channel(int channel) {
-		
+	public void channel(int channel) {
+		if(channel < 1) {
+			channel = 255;
+		}else if(channel > 255) {
+			channel = 1;
+		};
 	}
 	
-	private void channel(boolean up) {
-		
+	public void channel(boolean up) {
+		//up & down
+		if(up) {
+			channel += 1;
+		} else {
+			channel -= 1;
+		}
 	}
 	
-	private void volume(int volume) {
-		
+	public void volume(int volume) {
+		if(volume < 1) {
+			volume = 100;
+		}else if(volume > 100) {
+			volume = 1;
+		};
 	}
 	
-	private void volume(boolean up) {
-		
+	public void volume(boolean up) {
+		//up & down
+		if(up) {
+			volume += 1;
+		} else {
+			volume -= 1;
+		}
 	}
 	
-	private void status() {
-		System.out.println("TV[power=" + (power ? "on":"off") + ", " + "channel=" + 10 + ", " + "volume=" + 20 + "]");
+	public void status() {
+		System.out.println("TV[power=" + (power ? "on":"off") + ", " + "channel=" + channel + ", " + "volume=" + volume + "]");
 	}
 }
