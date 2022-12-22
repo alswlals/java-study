@@ -29,12 +29,11 @@ public class Prob05 {
 						System.out.println("더 높게");
 					} else if(answer == correctNumber) {
 						System.out.print( "다시 하겠습니까(y/n)>>" );
-						String answer = scanner.next();
-						if( "y".equals( answer ) == false ) {
+						String answer1 = scanner.next();
+						if( "y".equals( answer1 ) == false ) {
 							break;
 						}
 					}
-					
 				}
 //				while(answer != correctNumber) {
 //				if (answer < correctNumber) 
@@ -45,12 +44,8 @@ public class Prob05 {
 //					break;
 //				}
 			}
-			
 			//새 게임 여부 확인하기
-			
 		}
-		
 		scanner.close();
 	}
-
 }

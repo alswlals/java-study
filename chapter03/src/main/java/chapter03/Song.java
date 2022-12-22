@@ -10,8 +10,14 @@ public class Song {
 	private int track;	
 	
 	public Song(String title, String artist) {
-		this.title = title;
-		this.artist = artist;
+		
+		this(title, artist, "", "", 0, 0);
+		
+//
+//		this.title = title;
+//		this.artist = artist;
+		
+		System.out.println("some codes6");
 	}
 	
 	public Song(String title, String artist, String album, String composer, int track, int year) {
@@ -21,6 +27,12 @@ public class Song {
 		this.composer = composer;
 		this.track = track;
 		this.year = year;
+		
+		System.out.println("..... some codes1");
+		System.out.println("..... some codes2");
+		System.out.println("..... some codes3");
+		System.out.println("..... some codes4");
+		System.out.println("..... some codes5");
 		
 	}
 	public String getTitle() {
@@ -61,7 +73,7 @@ public class Song {
 	}
 	
 	public void show() {
-		System.out.println(artist + " " + title + " " + "(" + album + ", " + year + ", " + track + "번 track, " + composer);
+		System.out.println(artist + " " + title + " " + "(" + album + ", " + year + ", " + track + "번 track, " + composer + ")");
 	
 	}
 	
