@@ -1,10 +1,17 @@
 package chapter03;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class ArrayUtilTest {
 
 	public static void main(String[] args) {
+		List list = null;
+		Stack s= null;
+		Queue q = null;
+		
 //		int[] b = new int[4];
 		
 //		int[] a = {10, 20, 30, 40};
