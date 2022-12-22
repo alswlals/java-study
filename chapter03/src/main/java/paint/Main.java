@@ -20,22 +20,19 @@ public class Main {
 //		point.show(true);
 		
 		drawPoint(point1); //아래 static drawrPoint 구현 후 진행
-		point1.show(false);
-//		point.disapear();
 		
-		ColorPoint point2 = new ColorPoint();
+		point1.show(false);
+//		point1.disapear();
+
+		Point point2 = new ColorPoint();
+
 		point2.setX(20);
 		point2.setY(20);
-		point2.setColor("red");
-		drawColorPoint(point2);
+		((ColorPoint)point2).setColor("red");
+		drawPoint(point2);
 	}
 	
 	public static void drawPoint(Point point) {
 		point.show();
 	}
-	
-	public static void drawColorPoint(ColorPoint colorpoint) {
-		colorpoint.show();
-	}
-
 }
