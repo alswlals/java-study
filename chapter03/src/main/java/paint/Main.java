@@ -19,8 +19,9 @@ public class Main {
 //		
 //		point.show(true);
 		
-		drawPoint(point1); //아래 static drawrPoint 구현 후 진행
+//		drawPoint(point1); //아래 static drawrPoint 구현 후 진행
 //		point1.disapear();
+		draw(point1);
 		point1.show(false);
 
 
@@ -31,35 +32,42 @@ public class Main {
 //		point2.setY(20);
 //		((ColorPoint)point2).setColor("red");
 		
-		drawPoint(point2);
+//		drawPoint(point2);
+		draw(point2);
 		
 		
 		
 		
 		Rect rect = new Rect();
 //		drawRect(rect);
-		drawShape(rect);
+//		drawShape(rect);
+		draw(rect);
 		
 		Triangle triangle = new Triangle();
 //		drawTriangle(triangle);
-		drawShape(triangle);
+//		drawShape(triangle);
+		draw(triangle);
 		
 		Circle circle = new Circle();
 //		drawCircle(circle);
-		drawShape(circle);
+//		drawShape(circle);
+		draw(circle);
 	}
 	
-	public static void drawPoint(Point point) {
-		point.show();
+	public static void draw(Drawable drawable) {
+		drawable.draw();
 	}
-	
+//	public static void drawPoint(Point point) {
+//		point.show();
+//	}
+//	
 //	public static void drawColorPoint(ColorPoint ColorPoint) {
 //		colorPoint.show();
 //	}
 	
-	public static void drawShape(Shape shape) {
-		shape.draw();
-	}
+//	public static void drawShape(Shape shape) {
+//		shape.draw();
+//	}
 //	
 //	public static void drawRect(Rect rect) {
 //		rect.draw();
