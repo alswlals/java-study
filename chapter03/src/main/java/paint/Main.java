@@ -20,19 +20,39 @@ public class Main {
 //		point.show(true);
 		
 		drawPoint(point1); //아래 static drawrPoint 구현 후 진행
-		
-		point1.show(false);
 //		point1.disapear();
+		point1.show(false);
 
-		Point point2 = new ColorPoint();
 
-		point2.setX(20);
-		point2.setY(20);
-		((ColorPoint)point2).setColor("red");
+		Point point2 = new ColorPoint(20, 20, "red");
+
+		//Point point2 = new ColorPoint(20, 20, "red"); 이거 사용하고 싶을 떄 
+//		point2.setX(20);
+//		point2.setY(20);
+//		((ColorPoint)point2).setColor("red");
+		
 		drawPoint(point2);
+		
+		
+		Rect rect = new Rect();
+		drawRect(rect);
+		
+		Triangle triangle = new Triangle();
+		drawTriangle(triangle);
 	}
 	
 	public static void drawPoint(Point point) {
 		point.show();
+	}
+	
+//	public static void drawColorPoint(ColorPoint ColorPoint) {
+//		colorPoint.show();
+//	}
+	
+	public static void drawRect(Rect rect) {
+		rect.draw();
+	}
+	public static void drawTriangle(Triangle triangle) {
+		triangle.draw();
 	}
 }
