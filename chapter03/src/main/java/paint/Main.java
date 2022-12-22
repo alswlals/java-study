@@ -34,11 +34,19 @@ public class Main {
 		drawPoint(point2);
 		
 		
+		
+		
 		Rect rect = new Rect();
-		drawRect(rect);
+//		drawRect(rect);
+		drawShape(rect);
 		
 		Triangle triangle = new Triangle();
-		drawTriangle(triangle);
+//		drawTriangle(triangle);
+		drawShape(triangle);
+		
+		Circle circle = new Circle();
+//		drawCircle(circle);
+		drawShape(circle);
 	}
 	
 	public static void drawPoint(Point point) {
@@ -49,10 +57,17 @@ public class Main {
 //		colorPoint.show();
 //	}
 	
-	public static void drawRect(Rect rect) {
-		rect.draw();
+	public static void drawShape(Shape shape) {
+		shape.draw();
 	}
-	public static void drawTriangle(Triangle triangle) {
-		triangle.draw();
-	}
+//	
+//	public static void drawRect(Rect rect) {
+//		rect.draw();
+//	}
+//	public static void drawTriangle(Triangle triangle) {
+//		triangle.draw();
+//	}
+//	public static void drawCricle(Cricle cricle) {
+//		cricle.draw();
+//	}
 }
