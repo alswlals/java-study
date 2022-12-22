@@ -52,6 +52,29 @@ public class Main {
 //		drawCircle(circle);
 //		drawShape(circle);
 		draw(circle);
+		
+		draw(new GraphicText("Hello World"));
+		
+		
+		// instanceof 연산자 Test
+		System.out.println(circle instanceof Object);
+		System.out.println(circle instanceof Shape);
+		System.out.println(circle instanceof Circle);
+		//instance 관계에서 가능한 건 하이라이터 ? 밖에 없음 이때 조건은 
+		//래퍼런스 하고 있는 객체가 있으면 그 타입으 하이라이키? 바로위에잇는녀석만물어보기가능
+		//근데 만일 Object s =  라고 하면 Object의 있는  건 다 부를 수 있음
+		
+		// 오류 : 연산자 우측항이 클래스인 경우,
+		// 		 레퍼런스하고 있는 class type의 hierachy상의 하위와 상위만
+		//		 instanceof 연산자를 사용할 수 있다.
+//		System.out.println(circle instanceof Rect);
+		Object o = circle; // up casting
+		System.out.println(o instanceof String);
+		
+		// 연산자 우측항이 인터페이스인 경우,
+		// Hierachy 상관없이 instanceof 연산자를 사용할 수 있다.
+		System.out.println(circle instanceof Drawable);
+		System.out.println(circle instanceof Runnable);
 	}
 	
 	public static void draw(Drawable drawable) {
