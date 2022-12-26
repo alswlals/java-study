@@ -3,7 +3,7 @@ package com.douzone.paint.collection;
 import com.douzone.paint.shape.Shape;
 
 //Generic 사용
-public class MyStack<T super Shape> {
+public class MyStack<T extends Shape> {
 	private int top;
 	private T[] buffer;
 	

@@ -74,7 +74,8 @@ public class GenericTest {
 	 *    - 제네릭 클래스 MyStack의 제네릭 파라미터를 Shape의 부모로만 하자!
 	 *      MyStack<? super Shape>  -> O
 	 */
-	public static void drawShapeLayer(List<? extends Shape> in, /*Producer(만드는 놈), Lower Bounded-사용할 때 제한 */
+	public static void drawShapeLayer(
+			List<? extends Shape> in, /*Producer(만드는 놈), Lower Bounded-사용할 때 제한 */
 			MyStack<? super Drawable> out /* Consumer(받는 놈), Upper Bounded-사용할 때 제한(drawable기능 밖에 못 씀)*/) { //집어 넣는 애를 제한하는 게 아님
 //		잘못된 사용
 //		MyStack <? extends Shape> s1 = new MyStack<>(10);  -> x
