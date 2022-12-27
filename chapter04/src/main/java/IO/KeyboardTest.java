@@ -31,8 +31,8 @@ public class KeyboardTest {
 					if(br != null) {
 						br.close();
 					}
-				} catch {
-					ex.printStackTrace();
+				} catch(IOException e) {
+					e.printStackTrace();
 				}
 			}
 		}
