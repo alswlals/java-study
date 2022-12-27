@@ -1,4 +1,5 @@
 package collection;
+//collection에 구현했기 때문에 구현 가능
 
 import java.util.HashSet;
 import java.util.Set;
