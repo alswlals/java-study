@@ -36,13 +36,14 @@ public class LoginMain {
 	}
 	
 	public static void login(List<User> users, User user ){
-		/* 코드 작성 */
-		/*exception을 일으키는 함수를 만들수 있냐 없냐*/
-		//User authUser = login(joinUsers, new User( id, password) );
-		//if(authUser == null){
-		//	sout()
-		// 	return
-		//}
-		//sout
+			for(User use : users) {
+				if(users.contains(user.getId())&&!users.contains(user.getPassword())) {
+					throw new PasswordDismatchException();
+				}else if(!users.contains(user.getId())) {
+					throw new UserNotFoundException();
+				}
+				System.out.println(user.getId());
+			}
+		}
 	}
-}
+
