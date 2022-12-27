@@ -2,6 +2,9 @@ package prob01;
 
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+
+import prob01.Gugudan;
 
 public class GugudanApp {
 
@@ -53,17 +56,9 @@ public class GugudanApp {
 		
 		/* Integer 정수 객체를 담는 HashSet - 중복을 거부함*/
 		
-		HashSet<Integer> rdnum = new HashSet<>();
-		while (rdnum.size() < 9) {
-			
-		}
-		boolean isFirstNum = true;
-		for(int aNum : rdnum) {
-			if(isFirstNum) {
-				System.out.println(aNum);
-			} else {
-				System.out.println(aNum);
-			}
+		Set<Gugudan> set = new HashSet<>();
+		for(Gugudan g:set) {
+			System.out.println(g);
 		}
 		return boardNumbers;
 		/* 중복되지 말아야 함 */

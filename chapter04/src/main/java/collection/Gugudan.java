@@ -1,4 +1,4 @@
-package prob01;
+package collection;
 
 import java.util.Objects;
 
