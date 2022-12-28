@@ -44,15 +44,19 @@ public class TCPServer {
 				while (true) {
 					// 5. 데이터 읽기
 					byte[] buffer = new byte[256];
-//					is.read(buffer); // blocking
-					int readByteCount = is.read(buffer); //blocking
-					if(readByteCount == -1) {
+					// is.read(buffer); // blocking
+					int readByteCount = is.read(buffer); // blocking
+					if (readByteCount == -1) {
+						//클라이언트가 정상적으로 종료(close() 호출)
 						System.out.println("[sever] closed by client");
 						break;
 					}
-					
+
 					String data = new String(buffer, 0, readByteCount, "utf-8");
-					System.out.println("[server] received:  "+ data);
+					System.out.println("[server] received:  " + data);
+					
+					// 6. 데이터 쓰기
+					os.write(data.getBytes("utf-8"));
 				}
 			} catch (IOException ex) {
 				System.out.println("[server]error: " + ex);
