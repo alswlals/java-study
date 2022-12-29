@@ -104,7 +104,7 @@ public class RequestHandler extends Thread {
 		String contentType = Files.probeContentType(file.toPath());
 
 		// 응답
-		outputStream.write("HTTP/1.1 200 OK\r\n".getBytes("UTF-8"));
+		outputStream.write(protocol + " 200 OK\r\n".getBytes("UTF-8"));
 		outputStream.write(("Content-Type: " + contentType +"; charset=utf-8\r\n").getBytes("UTF-8"));
 		outputStream.write("\r\n".getBytes());
 		outputStream.write(body);

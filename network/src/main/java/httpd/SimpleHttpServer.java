@@ -1,7 +1,6 @@
 package httpd;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,7 +25,7 @@ public class SimpleHttpServer {
 				Socket socket = serverSocket.accept();
 
 				// 4. Delegate(위임) Processing Request 요청을 처리하는 것을 위임하다
-				new RequestHandler(socket).start();
+				new RequestHandler02(socket).start();
 			}
 
 		} catch (IOException ex) {
