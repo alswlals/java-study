@@ -19,7 +19,7 @@ public class SimpleHttpServer {
 			   
 			// 2. Bind
 			serverSocket.bind( new InetSocketAddress( "0.0.0.0", PORT ) );
-			consoleLog("starts...[prot:  " + PORT + "]");
+			consoleLog("starts...[port:  " + PORT + "]");
 
 			while (true) {
 				// 3. Wait for connecting ( accept ) 연결을 기다리다
