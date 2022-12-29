@@ -63,8 +63,6 @@ public class RequestHandler02 extends Thread {
 				reponse400Error(outputStream, tokens[2]);
 			}
 			
-			
-			
 			// 예제 응답입니다.
 			// 서버 시작과 테스트를 마친 후, 주석 처리 합니다.
 			// outputStream.write("HTTP/1.1 200 OK\r\n".getBytes("UTF-8"));
@@ -89,15 +87,14 @@ public class RequestHandler02 extends Thread {
 
 	
 	private void reponseStaticResource(
-		OutputStream outputStream,
-		String url,
-		String protocol) throws IOException {
+		OutputStream outputStream, String url, String protocol) throws IOException {
 		// default(welcome) file set
 		if("/".equals(url)) {
 			url = "/index.html";
 		}
 		
 		File file = new File(DOCUMENT_ROOT + url);
+		System.out.print(DOCUMENT_ROOT + url);
 		if(!file.exists()) {
 			reponse404Error(outputStream, protocol);
 			return;
@@ -114,19 +111,21 @@ public class RequestHandler02 extends Thread {
 		outputStream.write(body);
 	}
 
-	private void reponse404Error(OutputStream outputStream, String protocol) {
+	private void reponse404Error(OutputStream outputStream, String protocol) throws IOException {
 		// HTTP/1.1 404 Not Found
 		//Content-Type: ...
 		// \r\n
 		//.......~ s내용
-		
+		reponseStaticResource(outputStream, "/error/404.html",protocol);
+
+			
 	}
-	private void reponse400Error(OutputStream outputStream, String string) {
+	private void reponse400Error(OutputStream outputStream, String protocol) throws IOException {
 		// HTTP/1.1 404 Bad Request
 		//Content-Type: ...
 		// \r\n
 		//...400~
-		
+		reponseStaticResource(outputStream, "/error/400.html",protocol);
 	}
 
 
