@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class EchoServer {
 	/* 넣는 이유 : */
@@ -30,10 +31,12 @@ public class EchoServer {
 			log("connected by client[" + remoteHostAddress + ":" + remotePort + "]");
 
 			try {
-				/* BufferedReader로 보내주기 때문에 개행 필수(경계 | 문자 x) 읽을 수 있게 보장은 해주지만 그대로 읽게는 안해줌
-				 * true 사용 이유: 버퍼를 사용할 때 즉시 비워줘라(다 찰때까지 기다리지 말고) */
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"), true);
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
+				/*
+				 * BufferedReader로 보내주기 때문에 개행 필수(경계 | 문자 x) 읽을 수 있게 보장은 해주지만 그대로 읽게는 안해줌 true
+				 * 사용 이유: 버퍼를 사용할 때 즉시 비워줘라(다 찰때까지 기다리지 말고)
+				 */
+				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
+				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 
 				while (true) {
 					String data = br.readLine(); /* 꼭 개행을 붙여라 */
@@ -44,6 +47,8 @@ public class EchoServer {
 					log("received:  " + data);
 					pw.println(data + "\n");
 				}
+			} catch (SocketException ex) {
+				System.out.println("[server]suddenly closed by client");
 			} catch (IOException ex) {
 				log("error: " + ex);
 			} finally {
