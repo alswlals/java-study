@@ -24,6 +24,7 @@ public class EchoServer {
 
 			Socket socket = serverSocket.accept();
 
+			//여기서부터 스레드 가넝
 			/* 정보 빼오기 */
 			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
 			String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
@@ -60,6 +61,7 @@ public class EchoServer {
 					ex.printStackTrace();
 				}
 			}
+			//여기까지 스레드 가넝
 		} catch (IOException e) {
 			log("error: " + e);
 		} finally {
