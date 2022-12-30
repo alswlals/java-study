@@ -23,10 +23,10 @@ public class TCPServer {
 			// IPAddress: 0.0.0.0: 특정 호스트 IP에 바인딩 하지 않는다.
 			// 뒤에 숫자는 입력된 값까지 처리된다? ex) 10이면 11번째 accept - connection없이 켁 죽어있음
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", 5000), 10);
-			/* 확정 Ip 지정 x , */
-			// serverSocket.bind(new InetSocketAddress("192.168.10.25", 5000));
-			// serverSocket.bind(new
-			// InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), 5000));
+			/* 확정 Ip 지정 x , 
+			 * serverSocket.bind(new InetSocketAddress("192.168.10.25", 5000));
+			 * serverSocket.bind(new
+			// InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), 5000));*/
 
 			// 3. accept
 			// serverSocket.accept(); /* blocking*/
@@ -59,6 +59,13 @@ public class TCPServer {
 
 					String data = new String(buffer, 0, readByteCount, "utf-8");
 					System.out.println("[server] received:  " + data);
+					
+					// SO_TIMEOUT 옵션 테스트용
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					
 					// 6. 데이터 쓰기
 					os.write(data.getBytes("utf-8"));
