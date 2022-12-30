@@ -1,5 +1,7 @@
 package chat;
 
-public class ChatClientThread extends Thread {
+import java.net.Socket;
 
+public class ChatClientThread extends Thread {
+	
 }

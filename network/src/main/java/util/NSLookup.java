@@ -11,7 +11,8 @@ public class NSLookup {
 		/* 주소 입력하기 */
 		Scanner sc = new Scanner(System.in);
 		/**
-		 * 이렇게 써주지 않는 이유는 아래 배열에서 이미 값을 지정해줬기 때문 InetAddress inetAddress[] = null;
+		 * 이렇게 써주지 않는 이유는 아래 배열에서 이미 값을 지정해줬기 때문
+		 * InetAddress inetAddress[] = null;
 		 */
 
 		/* 반복해주기 */
