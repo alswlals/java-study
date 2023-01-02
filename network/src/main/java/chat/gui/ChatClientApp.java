@@ -13,7 +13,7 @@ public class ChatClientApp {
 			System.out.print(">>> ");
 			name = scanner.nextLine();
 			
-			if (name.isEmpty() == false ) {
+			if (!name.isEmpty()) {
 				break;
 			}
 			
@@ -22,7 +22,22 @@ public class ChatClientApp {
 		
 		scanner.close();
 
-		new ChatWindow(name).show();
+		/* 1. Crate Socket*/
+		/* 2. Connect to Server*/
+		/* 3. Get IOStream*/
+		/* 4. Join Protocol 진행
+		 * 	  String line = br. readLine();
+		 *	  String line = "JOIN:OK";
+		 *	  if("JOIN:OK".equals(line)) {
+		 *			new ChatWindow(name).show();
+		 *			return;
+		 *	  }*/
+		/* 5. */
+		
+		String line = "JOIN:OK";
+		if("JOIN:OK".equals(line)) {
+			new ChatWindow(name).show();
+		}
 	}
 
 }
