@@ -14,10 +14,11 @@ public class ChatClient {
 	
 	public static void main(String[] args) {
 		Socket socket = null;
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = null;
 		
 		try {
 			System.out.println("닉네임을 입력하세요");
+			scanner = new Scanner(System.in);
 			String nickname = scanner.nextLine();
 			
 			/* 1. socket 생성 */
@@ -29,7 +30,7 @@ public class ChatClient {
 			
 			/* 3. Reader|Writer 생성*/
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-			pw.println("Join :"+ nickname);
+			pw.println("Join:"+ nickname);
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			
@@ -40,12 +41,12 @@ public class ChatClient {
 				String input = scanner.nextLine();
 				
 				if("quit".equals(input) == true) {
-					pw.println("quit");
+					pw.println("quit:");
 					break;
 				} else {
 					pw.println("message: " + input);
+//					System.out.println(nickname+":"+input);
 				}
-								
 			}
 			
 		} catch (IOException ex){
@@ -63,11 +64,6 @@ public class ChatClient {
 		}
 	}
 	
-	
-
-
-
-
 	private static void log(String message) {
 		System.out.println("[ChatClient]" + message);
 	}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -15,26 +16,23 @@ import java.util.List;
 public class ChatServerThread extends Thread {
 	private Socket socket;
 	private String nickname;
-	String message;
 	List<Writer> listWriters;
 	PrintWriter pw;
 	BufferedReader br;
-	Writer writer;
 	
 	
 	public ChatServerThread(Socket socket, List<Writer> listWriters) {
 		this.socket = socket;
-		listWriters = new ArrayList<Writer>();
+		this.listWriters = listWriters;
 	}
-
-	/* 요청 처리를 위한 Loop */
+	
 	@Override
 	public void run() {
-		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
-		int remoteHostPort = inetRemoteSocketAddress.getPort();
+//		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
+//		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
+//		int remoteHostPort = inetRemoteSocketAddress.getPort();
 
-		ChatServer.log("connected by client [ " + remoteHostAddress + "/" + remoteHostPort + "]");
+//		ChatServer.log("connected by client [ " + remoteHostAddress + "/" + remoteHostPort + "]");
 		
 		try {
 			/* 1. Stream 얻기*/
@@ -55,29 +53,35 @@ public class ChatServerThread extends Thread {
 //				if("join".equals(tokens[0])) {
 //					doJoin(tokens[1], pw);
 //				} else if("message".equals(tokens[0])) {
-//					doMessage(tokens[1]);
+//					doMessage(tokens[1], pw);
 //				} else if("quit".equals(tokens[0])) {
 //					doQuit();
 //				} else {
 //					log("Error: 알 수 없는 요청("+tokens[0]+")");
 //				}
+//				System.out.println("tokens[0]"+tokens[0]);
+//				System.out.println("tokens[1]"+tokens[1]);
 				switch (tokens[0]) {
-				case "JOIN" : 
-					doJoin(request);
+				case "Join" : 
+					doJoin(tokens[1],pw);
 					break;
-				case "SND" :
+				case "Message" :
 					doMessage(request + ":" + nickname);
 					break;
-				case "QUIT" :
-					doQuit();
+				case "Quit" :
+					doQuit(pw);
 					
 				}
 				
 			}
-		} catch (SocketException ex) {
-			System.out.println("[server]suddenly closed by client");
-		} catch(IOException ex) {
-			System.out.println("error: " + ex);
+		}
+//		catch (SocketException ex) {
+//			System.out.println("[server]suddenly closed by client");
+//		} catch (UnsupportedEncodingException e) {
+//			ChatServer.log("에러: " + e);
+//		}
+		catch(IOException ex) {
+			log("error: " + ex);
 		}  finally {
 				try {
 					if (socket != null || !socket.isClosed()) {
@@ -91,28 +95,29 @@ public class ChatServerThread extends Thread {
 
 	
 
-	private void doJoin(String nickName) {
+	private void doJoin(String nickName,  PrintWriter writer) {
 		this.nickname = nickName;
 		String data = nickName+"님이 참여하였습니다.";
 		broadcast(data);
 		addWriter(writer);
+		System.out.println(data);
+		pw.println("Join:ok");
 		
 	}
 	private void doMessage(String message) {
 		broadcast(this.nickname + ": "+ message);
-		
 	}
-	private void doQuit() {
+	private void doQuit( PrintWriter writer) {
 			removeWriter(writer);
 			String data = nickname + "님이 퇴장하였습니다.";
 			broadcast(data);
-			
 		}
 	
 	private void broadcast(String data) {
 		synchronized(listWriters) {
 			for(Writer writer : listWriters) {
 				PrintWriter printWriter = (PrintWriter)writer;
+				System.out.println(data);
 				printWriter.println(data);
 			}
 		}
