@@ -5,38 +5,47 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class ChatClient {
-	private static final String SERVER_IP = "127.0.0.1";
+	public static final String SERVER_IP = "127.0.0.1";
 	
 	public static void main(String[] args) {
 		Socket socket = null;
-		Scanner scanner = null;
+		Scanner scanner = new Scanner(System.in);
 		
 		try {
 			System.out.println("닉네임을 입력하세요");
-			String nickName = scanner.nextLine();
+			String nickname = scanner.nextLine();
 			
 			/* 1. socket 생성 */
 			socket = new Socket();
-			socket.connect(InetSocketAddress(SERVER_IP, ChatServer.PORT));
+			
+			/* 2. 연결*/
+			socket.connect(new InetSocketAddress(SERVER_IP, ChatServer.PORT));
 			log("connected");
 			
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UFT_8"), true);
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF_8"));
+			/* 3. Reader|Writer 생성*/
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+			pw.println("Join :"+ nickname);
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+			
+			new ChatClientThread(br).start();
 			
 			while(true) {
 				System.out.println("> ");
-				scanner = new Scanner(System.in);
 				String input = scanner.nextLine();
 				
 				if("quit".equals(input) == true) {
-					log("");
+					pw.println("quit");
+					break;
+				} else {
+					pw.println("message: " + input);
 				}
-				
-				
+								
 			}
 			
 		} catch (IOException ex){
@@ -45,13 +54,20 @@ public class ChatClient {
 			try {
 				if (socket != null && !socket.isClosed()) {
 					socket.close();
+				} else if(scanner != null) {
+					scanner.close();
 				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("error: " + e);
 			}
 		}
 	}
 	
+	
+
+
+
+
 	private static void log(String message) {
 		System.out.println("[ChatClient]" + message);
 	}
