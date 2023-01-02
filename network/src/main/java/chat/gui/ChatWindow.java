@@ -53,6 +53,16 @@ public class ChatWindow {
 		
 		// Textfield
 		textField.setColumns(80);
+		//enter
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char keyCode = e.getKeyChar();
+				if(keyCode == KeyEvent.VK_ENTER) {
+					sendMessage();
+				}
+			}
+		});
 
 		// Pannel
 		pannel.setBackground(Color.LIGHT_GRAY);
@@ -65,21 +75,54 @@ public class ChatWindow {
 		frame.add(BorderLayout.CENTER, textArea);
 
 		// Frame
+		// x 눌렀을 때 화면 종료
 //		frame.addWindowListener(new WindowAdapter() {
 //			public void windowClosing(WindowEvent e) {
 //				System.exit(0);
 //			}
 //		});
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				finish();
+			}
+		});
 		frame.setVisible(true);
 		frame.pack();
+		
+		//IOSTream 받아오기 구현
+		// ChatClientThread 생성 후 실행
 	}
-	
+	private void finish() {
+		// quit protocol 구현
+		if("quit".equals(textField)) {
+			System.exit(0);
+		}
+		// eixt java(Application)
+		System.exit(0); // 0 -> 종료 | 인티저 값 반환
+	}
 	private void sendMessage() {
 		String message = textField.getText();
 		System.out.println("메세지 보내는 프로토콜 구현: " + message);
 		
 		textField.setText("");
 		textField.requestFocus();
-		textField.key
+		
+		// ChatClientThread 에서 서버로부터 받은 메세지가 있다 치고
+		updateTextArea("nickName : " + message);
+		
+	}
+	private void updateTextArea(String message) {
+		textArea.append(message);
+		textArea.append("\n");
+	}
+	private class ChatClientThread extends Thread {
+		@Override
+		public void run() {
+			//String message = br.readLine();
+			//
+			//
+			updateTextArea("안녕");
+		}
 	}
 }
