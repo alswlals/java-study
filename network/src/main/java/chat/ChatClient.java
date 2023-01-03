@@ -30,7 +30,7 @@ public class ChatClient {
 			
 			/* 3. Reader|Writer 생성*/
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-			pw.println("Join:"+ nickname);
+			pw.println("join:"+ nickname);
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			
@@ -40,11 +40,11 @@ public class ChatClient {
 				System.out.println("> ");
 				String input = scanner.nextLine();
 				
-				if("quit".equals(input) == true) {
-					pw.println("quit:");
+				if("quit".equals(input)) {
+					pw.println("quit");
 					break;
 				} else {
-					pw.println("message: " + input);
+					pw.println("message:" + input);
 //					System.out.println(nickname+":"+input);
 				}
 			}

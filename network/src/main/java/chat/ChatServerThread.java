@@ -62,15 +62,15 @@ public class ChatServerThread extends Thread {
 //				System.out.println("tokens[0]"+tokens[0]);
 //				System.out.println("tokens[1]"+tokens[1]);
 				switch (tokens[0]) {
-				case "Join" : 
+				case "join" : 
 					doJoin(tokens[1],pw);
 					break;
-				case "Message" :
-					doMessage(request + ":" + nickname);
+				case "message" :
+					doMessage(tokens[1]);
 					break;
-				case "Quit" :
+				case "quit" :
 					doQuit(pw);
-					
+					break;
 				}
 				
 			}
@@ -84,7 +84,7 @@ public class ChatServerThread extends Thread {
 			log("error: " + ex);
 		}  finally {
 				try {
-					if (socket != null || !socket.isClosed()) {
+					if (socket != null && !socket.isClosed()) {
 						socket.close();
 					}
 				} catch (IOException ex) {
@@ -110,6 +110,7 @@ public class ChatServerThread extends Thread {
 	private void doQuit( PrintWriter writer) {
 			removeWriter(writer);
 			String data = nickname + "님이 퇴장하였습니다.";
+			pw.println("quit");			
 			broadcast(data);
 		}
 	
@@ -117,7 +118,6 @@ public class ChatServerThread extends Thread {
 		synchronized(listWriters) {
 			for(Writer writer : listWriters) {
 				PrintWriter printWriter = (PrintWriter)writer;
-				System.out.println(data);
 				printWriter.println(data);
 			}
 		}

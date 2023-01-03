@@ -8,7 +8,7 @@ import java.net.Socket;
 public class ChatClientThread extends Thread {
 
 	private BufferedReader br;
-	private Socket socket;
+
 
 	public ChatClientThread(BufferedReader br) {
 		this.br = br;
@@ -18,27 +18,20 @@ public class ChatClientThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			socket = new Socket();
 			while (true) {
 				String data = br.readLine();
-				if (data.equals("Quit")) {
+				if (data.equals("quit")) {
 					log("closed by client");
 					break;
 				} else {
 					System.out.println(data);
 				}
 			}
+			System.out.println("check");
 		} catch (IOException e) {
 			log("BufferedReader error: " + e);
 		} finally {
-			try {
-				if (socket != null && !socket.isClosed()) {
-					socket.close();
-				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		
 		}
 	}
 
