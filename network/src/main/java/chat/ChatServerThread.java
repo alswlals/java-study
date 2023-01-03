@@ -45,6 +45,7 @@ public class ChatServerThread extends Thread {
 				String request = br.readLine();
 				if(request == null) {
 					log("Client로부터 연결이 끊겼습니다.");
+					doQuit(pw);
 					break;
 				}
 				
@@ -81,7 +82,7 @@ public class ChatServerThread extends Thread {
 //			ChatServer.log("에러: " + e);
 //		}
 		catch(IOException ex) {
-			log("error: " + ex);
+			log("error:" + ex);
 		}  finally {
 				try {
 					if (socket != null && !socket.isClosed()) {
@@ -105,7 +106,7 @@ public class ChatServerThread extends Thread {
 		
 	}
 	private void doMessage(String message) {
-		broadcast(this.nickname + ": "+ message);
+		broadcast(this.nickname + ":"+ message);
 	}
 	private void doQuit( PrintWriter writer) {
 			removeWriter(writer);

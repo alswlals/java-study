@@ -23,7 +23,7 @@ public class ChatServer {
 
 //			String hostAddress = InetAddress.getLocalHost().getHostAddress();
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT));
-			log("연결되었습니다. [PROT: " + PORT + "]");
+			log("연결되었습니다. [PROT:" + PORT + "]");
 			
 			while(true) {
 				Socket socket = serverSocket.accept();
@@ -33,7 +33,7 @@ public class ChatServer {
 		} catch (SocketException e) {
 			log("suddenly closed by client"+e);
 		} catch (IOException e) {
-			log("error: " + e);
+			log("error:" + e);
 		} finally {
 				try {	
 					if(serverSocket != null && !serverSocket.isClosed()) {	

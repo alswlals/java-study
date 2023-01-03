@@ -39,7 +39,10 @@ public class ChatClient {
 			while(true) {
 				System.out.println("> ");
 				String input = scanner.nextLine();
-				
+				if(input == "") {
+					System.out.println("잘못된 입력입니다.");
+					continue;
+				}
 				if("quit".equals(input)) {
 					pw.println("quit");
 					break;
@@ -50,7 +53,7 @@ public class ChatClient {
 			}
 			
 		} catch (IOException ex){
-			log("Error: " + ex);
+			log("Error:" + ex);
 		} finally {
 			try {
 				if (socket != null && !socket.isClosed()) {
@@ -59,7 +62,7 @@ public class ChatClient {
 					scanner.close();
 				}
 			} catch (IOException e) {
-				System.out.println("error: " + e);
+				System.out.println("error:" + e);
 			}
 		}
 	}

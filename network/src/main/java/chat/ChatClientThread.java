@@ -29,13 +29,13 @@ public class ChatClientThread extends Thread {
 			}
 			System.out.println("check");
 		} catch (IOException e) {
-			log("BufferedReader error: " + e);
+			log("error:" + e);
 		} finally {
 		
 		}
 	}
 
 	private void log(String str) {
-		System.out.println("[server] " + str);
+		System.out.println("error: " + str);
 	}
 }
