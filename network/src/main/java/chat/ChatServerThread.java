@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.List;
 
 public class ChatServerThread extends Thread {
@@ -36,8 +36,8 @@ public class ChatServerThread extends Thread {
 		
 		try {
 			/* 1. Stream 얻기*/
-			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 	
 			/* 2. 요청 처리*/
 			
@@ -107,6 +107,7 @@ public class ChatServerThread extends Thread {
 	}
 	private void doMessage(String message) {
 		broadcast(this.nickname + ":"+ message);
+		
 	}
 	private void doQuit( PrintWriter writer) {
 			removeWriter(writer);
@@ -116,6 +117,7 @@ public class ChatServerThread extends Thread {
 		}
 	
 	private void broadcast(String data) {
+				
 		synchronized(listWriters) {
 			for(Writer writer : listWriters) {
 				PrintWriter printWriter = (PrintWriter)writer;

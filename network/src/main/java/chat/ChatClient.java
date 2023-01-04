@@ -39,8 +39,8 @@ public class ChatClient {
 			while(true) {
 				System.out.println("> ");
 				String input = scanner.nextLine();
-				if(input == "") {
-					System.out.println("잘못된 입력입니다.");
+				if(input == "" || input == null || input.matches(".*[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣1-9].*")) {
+					System.out.println("잘못된 입력입니다. 특수문자를 제외한 문자로 다시 입력해주세요.");
 					continue;
 				}
 				if("quit".equals(input)) {
