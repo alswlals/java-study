@@ -6,7 +6,7 @@ public class ChatClientApp {
 	public static void main(String[] args) {
 		String name = null;
 		Scanner scanner = new Scanner(System.in);
-
+		
 		while( true ) {
 			
 			System.out.println("대화명을 입력하세요.");
@@ -15,29 +15,15 @@ public class ChatClientApp {
 			
 			if (!name.isEmpty()) {
 				break;
-			}
+			} 
 			
 			System.out.println("대화명은 한글자 이상 입력해야 합니다.\n");
+			
 		}
-		
+		new ChatWindow(name).show();
 		scanner.close();
-
-		/* 1. Crate Socket*/
-		/* 2. Connect to Server*/
-		/* 3. Get IOStream*/
-		/* 4. Join Protocol 진행
-		 * 	  String line = br. readLine();
-		 *	  String line = "JOIN:OK";
-		 *	  if("JOIN:OK".equals(line)) {
-		 *			new ChatWindow(name).show();
-		 *			return;
-		 *	  }*/
-		/* 5. */
 		
-		String line = "JOIN:OK";
-		if("JOIN:OK".equals(line)) {
-			new ChatWindow(name).show();
-		}
+		
 	}
 
 }

@@ -1,4 +1,5 @@
 package chat.gui;
+
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -12,6 +13,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.Scanner;
+
+//import chat.ChatClientThread;
 
 public class ChatWindow {
 
@@ -20,6 +31,11 @@ public class ChatWindow {
 	private Button buttonSend;
 	private TextField textField;
 	private TextArea textArea;
+	private Socket socket;
+	private BufferedReader br;
+	private PrintWriter pw;
+	private Scanner scanner;
+	private String nickname;
 
 	public ChatWindow(String name) {
 		frame = new Frame(name);
@@ -27,38 +43,42 @@ public class ChatWindow {
 		buttonSend = new Button("Send");
 		textField = new TextField();
 		textArea = new TextArea(30, 80);
+		nickname = name;
+
+		socket = new Socket();
+		try {
+			socket.connect(new InetSocketAddress("127.0.0.1", 8000));
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
+		} catch (Exception e) {
+			System.out.println(42353232);
+			finish();
+		}
+
 	}
 
 	public void show() {
 		// Button
 		buttonSend.setBackground(Color.GRAY);
 		buttonSend.setForeground(Color.WHITE);
-//		buttonSend.addActionListener( new ActionListener() {
-//			@Override
-//			public void actionPerformed( ActionEvent actionEvent ) {
-				//console log 처리 확인하기
-//				System.out.println("!!!!!!!");
-//				sendMessage();
-//			}
-//		});
+
 		buttonSend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sendMessage();
 			}
-		});/**이벤트를 등록? 리스너를 많이 등록할 수 있다 어노니멈스클로ㅡ?
-		 	* String s = new A().m(80);*/
-		
-//		buttonSend.addActionListener((e) -> sendMessage());
-		
+		});/**
+			 * 이벤트를 등록? 리스너를 많이 등록할 수 있다 어노니멈스클로ㅡ? String s = new A().m(80);
+			 */
+
 		// Textfield
 		textField.setColumns(80);
-		//enter
+		// enter
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char keyCode = e.getKeyChar();
-				if(keyCode == KeyEvent.VK_ENTER) {
+				if (keyCode == KeyEvent.VK_ENTER) {
 					sendMessage();
 				}
 			}
@@ -71,16 +91,10 @@ public class ChatWindow {
 		frame.add(BorderLayout.SOUTH, pannel);
 
 		// TextArea
-		textArea.setEditable(false);  //readOnly
+		textArea.setEditable(false); // readOnly
 		frame.add(BorderLayout.CENTER, textArea);
 
 		// Frame
-		// x 눌렀을 때 화면 종료
-//		frame.addWindowListener(new WindowAdapter() {
-//			public void windowClosing(WindowEvent e) {
-//				System.exit(0);
-//			}
-//		});
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -89,40 +103,100 @@ public class ChatWindow {
 		});
 		frame.setVisible(true);
 		frame.pack();
-		
-		//IOSTream 받아오기 구현
+
+		// IOSTream 받아오기 구현
 		// ChatClientThread 생성 후 실행
+		new ChatClientThread().start();
 	}
+
 	private void finish() {
 		// quit protocol 구현
-		if("quit".equals(textField)) {
+		if ("quit".equals(textField.getText())) {
 			System.exit(0);
 		}
 		// eixt java(Application)
 		System.exit(0); // 0 -> 종료 | 인티저 값 반환
 	}
+
 	private void sendMessage() {
 		String message = textField.getText();
 		System.out.println("메세지 보내는 프로토콜 구현: " + message);
-		
+
 		textField.setText("");
 		textField.requestFocus();
-		
+
+		if ("quit".equals(message)) {
+			finish();
+		} else if (!"".equals(message)) {
+						updateTextArea(nickname + ":" + message);
+
+		}
 		// ChatClientThread 에서 서버로부터 받은 메세지가 있다 치고
-		updateTextArea("nickName : " + message);
-		
+
 	}
+
 	private void updateTextArea(String message) {
-		textArea.append(message);
-		textArea.append("\n");
+		textArea.append(message + "\n");
 	}
-	private class ChatClientThread extends Thread {
+
+	public class ChatClientThread extends Thread {
 		@Override
 		public void run() {
-			//String message = br.readLine();
-			//
-			//
-			updateTextArea("안녕");
+			try {
+				while (true) {
+//					String name = scanner.nextLine();
+					String data = br.readLine();
+					if (data == "" || data == null) {
+						System.out.println("잘못된 입력입니다. 특수문자를 제외한 문자로 다시 입력해주세요.");
+						continue;
+					} else if ("quit".equals(data)) {
+						pw.println("quit");
+						break;
+					} else {
+						System.out.println(data);
+						pw.println("message:" + data);
+						updateTextArea(data);
+					}
+				}
+			} catch (IOException e) {
+				System.out.println("error:" + e);
+			} finally {
+				try {
+					if (socket != null && !socket.isClosed()) {
+						socket.close();
+					} else if (scanner != null) {
+						scanner.close();
+					}
+				} catch (IOException e) {
+					System.out.println("error:" + e);
+				}
+			}
+
 		}
+
 	}
 }
+//					String data = br.readLine();
+//					if (data.equals("quit")) {
+//						System.out.println("closed by client");
+//						break;
+//					} else {
+//						System.out.println(data);
+//						updateTextArea(data);
+//					}
+//				}
+//				System.out.println("check");
+//			} catch (IOException e) {
+//				System.out.println("error:" + e);
+//			} finally {
+//				try {
+//				if (socket != null && !socket.isClosed()) {
+//					socket.close();
+//				} else if(scanner != null) {
+//					scanner.close();
+//				}
+//			} catch (IOException e) {
+//				System.out.println("error:" + e);
+//			}
+//		}		
+//			updateTextArea("안녕");
