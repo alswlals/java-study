@@ -14,15 +14,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Scanner;
-
-//import chat.ChatClientThread;
 
 public class ChatWindow {
 
@@ -34,7 +30,6 @@ public class ChatWindow {
 	private Socket socket;
 	private BufferedReader br;
 	private PrintWriter pw;
-	private Scanner scanner;
 	private String nickname;
 
 	public ChatWindow(String name) {
@@ -49,9 +44,11 @@ public class ChatWindow {
 		try {
 			socket.connect(new InetSocketAddress("127.0.0.1", 8000));
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
+			pw.println("join:" + name);
+
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 		} catch (Exception e) {
-			System.out.println(42353232);
+			updateTextArea("비정상 종료입니다.");
 			finish();
 		}
 
@@ -67,9 +64,7 @@ public class ChatWindow {
 			public void actionPerformed(ActionEvent e) {
 				sendMessage();
 			}
-		});/**
-			 * 이벤트를 등록? 리스너를 많이 등록할 수 있다 어노니멈스클로ㅡ? String s = new A().m(80);
-			 */
+		});
 
 		// Textfield
 		textField.setColumns(80);
@@ -106,26 +101,33 @@ public class ChatWindow {
 
 		// IOSTream 받아오기 구현
 		// ChatClientThread 생성 후 실행
+
 		new ChatClientThread().start();
 	}
 
 	private void finish() {
 		// quit protocol 구현
-		if ("quit".equals(textField.getText())) {
+		if ("quit".equals(textField.getText()) || !socket.isClosed() || socket != null) {
 			System.exit(0);
+			try {
+				socket.close();
+			} catch (Exception e) {
+				updateTextArea("socket close error");
+			}
 		}
+
 		// eixt java(Application)
 		System.exit(0); // 0 -> 종료 | 인티저 값 반환
 	}
 
 	private void sendMessage() {
 		String message = textField.getText();
-		System.out.println("메세지 보내는 프로토콜 구현: " + message);
+		// System.out.println("메세지 보내는 프로토콜 구현: " + message);
 
 		textField.setText("");
 		textField.requestFocus();
 
-		if ("quit".equals(message)) {
+		if (message == null || "quit".equals(message)) {
 			finish();
 		} else if (!"".equals(message)) {
 			updateTextArea(nickname + ":" + message);
@@ -141,7 +143,15 @@ public class ChatWindow {
 			super(br);
 		}
 
+		@Override
+		public void print(String msg) {
+			updateTextArea(msg);
+		}
 
+		@Override
+		public void log(String str) {
+			updateTextArea("error: " + str);
+		}
 
 	}
 }
