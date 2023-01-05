@@ -128,75 +128,20 @@ public class ChatWindow {
 		if ("quit".equals(message)) {
 			finish();
 		} else if (!"".equals(message)) {
-						updateTextArea(nickname + ":" + message);
-
+			updateTextArea(nickname + ":" + message);
 		}
-		// ChatClientThread 에서 서버로부터 받은 메세지가 있다 치고
-
 	}
 
 	private void updateTextArea(String message) {
 		textArea.append(message + "\n");
 	}
 
-	public class ChatClientThread extends Thread {
-		@Override
-		public void run() {
-			try {
-				while (true) {
-//					String name = scanner.nextLine();
-					String data = br.readLine();
-					if (data == "" || data == null) {
-						System.out.println("잘못된 입력입니다. 특수문자를 제외한 문자로 다시 입력해주세요.");
-						continue;
-					} else if ("quit".equals(data)) {
-						pw.println("quit");
-						break;
-					} else {
-						System.out.println(data);
-						pw.println("message:" + data);
-						updateTextArea(data);
-					}
-				}
-			} catch (IOException e) {
-				System.out.println("error:" + e);
-			} finally {
-				try {
-					if (socket != null && !socket.isClosed()) {
-						socket.close();
-					} else if (scanner != null) {
-						scanner.close();
-					}
-				} catch (IOException e) {
-					System.out.println("error:" + e);
-				}
-			}
-
+	private class ChatClientThread extends chat.ChatClientThread {
+		public ChatClientThread() {
+			super(br);
 		}
+
+
 
 	}
 }
-//					String data = br.readLine();
-//					if (data.equals("quit")) {
-//						System.out.println("closed by client");
-//						break;
-//					} else {
-//						System.out.println(data);
-//						updateTextArea(data);
-//					}
-//				}
-//				System.out.println("check");
-//			} catch (IOException e) {
-//				System.out.println("error:" + e);
-//			} finally {
-//				try {
-//				if (socket != null && !socket.isClosed()) {
-//					socket.close();
-//				} else if(scanner != null) {
-//					scanner.close();
-//				}
-//			} catch (IOException e) {
-//				System.out.println("error:" + e);
-//			}
-//		}		
-//			updateTextArea("안녕");
