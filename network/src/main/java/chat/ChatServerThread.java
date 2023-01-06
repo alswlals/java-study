@@ -38,18 +38,27 @@ public class ChatServerThread extends Thread {
 
 				String[] tokens = request.split(":");
 
-				switch (tokens[0]) {
-					case "join":
-						doJoin(tokens[1], pw);
-						break;
-					case "message":
-						doMessage(tokens[1]);
-						break;
-					case "quit":
-						doQuit(pw);
-						break;
-					default:
-						log("에러:알수 없는 요청(" + tokens[0] + ")");
+				// switch (tokens[0]) {
+				// case "join":
+				// doJoin(tokens[1], pw);
+				// break;
+				// case "message":
+				// doMessage(tokens[1]);
+				// break;
+				// case "quit":
+				// doQuit(pw);
+				// break;
+				// default:
+				// log("에러:알수 없는 요청(" + tokens[0] + ")");
+				// }
+				if (tokens[0].equals("join")) {
+					doJoin(tokens[1], pw);
+				} else if (tokens[0].equals("quit")) {
+					doQuit(pw);
+				} else if (tokens[0].equals("message")) {
+					doMessage(tokens[1]);
+				} else {
+					doMessage(request);
 				}
 
 			}
@@ -79,7 +88,8 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void doMessage(String message) {
-		broadcast(nickname + ":" + message);
+		String data = this.nickname + ":" + message;
+		broadcast(data);
 
 	}
 

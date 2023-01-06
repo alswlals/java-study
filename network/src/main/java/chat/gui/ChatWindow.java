@@ -131,6 +131,7 @@ public class ChatWindow {
 			finish();
 		} else if (!"".equals(message)) {
 			updateTextArea(nickname + ":" + message);
+			pw.println("message:" + nickname + ">>" + message);
 		}
 	}
 
