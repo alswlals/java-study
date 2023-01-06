@@ -130,8 +130,7 @@ public class ChatWindow {
 		if (message == null || "quit".equals(message)) {
 			finish();
 		} else if (!"".equals(message)) {
-			updateTextArea(nickname + ":" + message);
-			pw.println("message:" + nickname + ">>" + message);
+			pw.println("message:" + message);
 		}
 	}
 
