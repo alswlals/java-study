@@ -17,7 +17,7 @@ public class ChatClientThread extends Thread {
 				String data = br.readLine();
 
 				if (data == null || "".equals(data)) {
-					log("error");
+					log("server로부터 연결이 끊겼습니다.");
 					break;
 				} else if (data.equals("quit")) {
 					log("closed by client");
